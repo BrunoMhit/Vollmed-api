@@ -8,22 +8,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class ConfiguracoesSeguranca {
-    //bean usado para configuração
-    @Bean
-    public UserDetailsService dadosUsuariosCadastrados(){
-        UserDetails usuario1 = User.builder().username("joao@email.com").password("{noop}joao123").build();
-        UserDetails usuario2 = User.builder().username("maria@email.com").password("{noop}maria123").build();
-        UserDetails usuario3 = User.builder().username("iasmin@email.com").password("{noop}iasmin123").build();
-
-        //usuario guardados em mémoria por enquanto
-        return new InMemoryUserDetailsManager(usuario1,usuario2);
-    }
     //Como funciona o Bean?
     //teoria, como a gente a gente faz configuração de segurança usa o Bean
     //foram criados os usuários da nossa aplicação
@@ -42,5 +34,10 @@ public class ConfiguracoesSeguranca {
                         .alwaysRemember(true))
                 .csrf(Customizer.withDefaults())
                 .build();
+    }
+
+    @Bean
+    public PasswordEncoder codificadorDeSenha(){
+        return new BCryptPasswordEncoder();
     }
 }
