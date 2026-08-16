@@ -18,6 +18,15 @@ public class Usuario implements UserDetails {
     private String senha;
     private String nome;
 
+    //construto padrão para a JPA trabalhar
+    private Usuario(){}
+
+    public Usuario(String email, String senha, String nome) {
+        this.email = email;
+        this.senha = senha;
+        this.nome = nome;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
