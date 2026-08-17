@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 public class UsuarioService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
-    //para criptografar a senha, JPA já entende isso
     private final PasswordEncoder encriptador;
 
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder encriptador) {
@@ -28,5 +27,9 @@ public class UsuarioService implements UserDetailsService {
         String senhaCriptografada = encriptador.encode(senha);
         Usuario usuario = usuarioRepository.save(new Usuario(nome,email,senhaCriptografada));
         return usuario.getId();
+    }
+
+    public void excluir(Long id) {
+        usuarioRepository.deleteById(id);
     }
 }

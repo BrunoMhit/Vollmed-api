@@ -8,23 +8,23 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name="usuarios")
+@Table(name = "usuarios")
 public class Usuario implements UserDetails {
-    //atributos da classe
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String email;
     private String senha;
     private String nome;
 
-    //construto padrão para a JPA trabalhar
-    private Usuario(){}
+    protected Usuario() {}
 
-    public Usuario(String email, String senha, String nome) {
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.nome = nome;
     }
 
     @Override
