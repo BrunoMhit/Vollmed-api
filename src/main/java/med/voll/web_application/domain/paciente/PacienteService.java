@@ -30,7 +30,7 @@ public class PacienteService {
         }
 
         if (dados.id() == null) {
-            var usuarioId = usuarioService.salvarUsuario(dados.nome(), dados.email(), dados.cpf(), Perfil.PACIENTE);
+            Long usuarioId = usuarioService.salvarUsuario(dados.nome(), dados.email(), dados.cpf(), Perfil.PACIENTE);
             repository.save(new Paciente(usuarioId, dados));
         } else {
             var paciente = repository.findById(dados.id()).orElseThrow();
@@ -46,6 +46,7 @@ public class PacienteService {
     @Transactional
     public void excluir(Long id) {
         repository.deleteById(id);
+        usuarioService.excluir(id);
     }
 
 }

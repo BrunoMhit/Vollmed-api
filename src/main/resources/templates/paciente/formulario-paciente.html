@@ -4,16 +4,16 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{template.html}">
 <head>
-    <title>Cadastro de Médicos</title>
+    <title>Cadastro de Pacientes</title>
 </head>
 
 <body>
 <div layout:fragment="conteudo">
     <main class="container">
         <section class="card form-card">
-            <h2 class="title">Cadastro de médico</h2>
+            <h2 class="title">Cadastro de paciente</h2>
 
-            <form method="post" action="#" th:action="@{/medicos}" th:object="${dados}">
+            <form method="post" action="#" th:action="@{/pacientes}" th:object="${dados}">
                 <input type="hidden" name="id" th:field="*{id}">
 
                 <div class="form-group">
@@ -35,18 +35,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="crm">CRM:</label>
-                    <input id="crm" name="crm" th:field="*{crm}" required>
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('crm')}" th:errors="*{crm}"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="especialidade">Especialidade</label>
-                    <select id="especialidade" name="especialidade" required th:field="*{especialidade}">
-                        <option th:value="${null}">Selecione uma especialidade</option>
-                        <option th:each="especialidade : ${especialidades}" th:value="${especialidade}" th:text="${especialidade}" th:selected="${dados.especialidade == especialidade}"></option>
-                    </select>
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('especialidade')}" th:errors="*{especialidade}"></div>
+                    <label for="cpf">CPF:</label>
+                    <input id="cpf" name="crm" th:field="*{cpf}" required>
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>
                 </div>
 
                 <div class="buttons">
@@ -54,7 +45,7 @@
                         <img src="/static/assets/plus.png" th:src="@{/assets/plus.png}" alt="Ícone de adicionar" class="btn-icon">Cadastrar
                     </button>
 
-                    <a href="listagem-medicos.html" th:href="@{/medicos}" class="btn btn-secondary">
+                    <a href="listagem-pacientes.html" th:href="@{/pacientes}" class="btn btn-secondary">
                         <img src="/static/assets/back.png" th:src="@{/assets/back.png}" alt="Voltar" class="btn-icon">Voltar
                     </a>
                 </div>

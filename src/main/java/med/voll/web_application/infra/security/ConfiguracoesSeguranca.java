@@ -25,27 +25,31 @@ public class ConfiguracoesSeguranca {
     //enablemethodsecutirty a gente consegue trabalhar melhor com as config
     @Bean
     public SecurityFilterChain filtrosSeguranca(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests(req -> {
+        return http
+                .authorizeHttpRequests(req -> {
                     req.requestMatchers("/css/**", "/js/**", "/assets/**", "/", "/index", "/home").permitAll();
-//                    req.requestMatchers("/pacientes/**").hasRole("ATENDENTE");
-//                    req.requestMatchers(HttpMethod.GET, "/medicos").hasAnyRole("ATENDENTE", "PACIENTE");
-//                    req.requestMatchers("/medicos/**").hasRole("ATENDENTE");
-//                    req.requestMatchers(HttpMethod.POST, "/consultas/**").hasAnyRole("ATENDENTE", "PACIENTE");
-//                    req.requestMatchers(HttpMethod.PUT, "/consultas/**").hasAnyRole("ATENDENTE", "PACIENTE");
+//                        req.requestMatchers("/pacientes/**").hasRole("ATENDENTE");
+//                        req.requestMatchers(HttpMethod.GET, "/medicos").hasAnyRole("ATENDENTE", "PACIENTE");
+//                        req.requestMatchers("/medicos/**").hasRole("ATENDENTE");
+//                        req.requestMatchers(HttpMethod.POST, "/consultas/**").hasAnyRole("ATENDENTE", "PACIENTE");
+//                        req.requestMatchers(HttpMethod.PUT, "/consultas/**").hasAnyRole("ATENDENTE", "PACIENTE");
                     req.anyRequest().authenticated();
                 })
                 .formLogin(form -> form.loginPage("/login")
                         .defaultSuccessUrl("/")
                         .permitAll())
-                .logout(logout -> logout.logoutSuccessUrl("/login?logout").permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
                 .rememberMe(rememberMe -> rememberMe.key("lembrarDeMim")
-                        .alwaysRemember(true))
+                        .alwaysRemember(true)
+                )
                 .csrf(Customizer.withDefaults())
                 .build();
     }
 
     @Bean
-    public PasswordEncoder codificadorDeSenha(){
+    public PasswordEncoder codificadorSenha(){
         return new BCryptPasswordEncoder();
     }
 }

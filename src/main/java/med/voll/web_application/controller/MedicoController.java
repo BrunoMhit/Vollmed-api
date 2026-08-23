@@ -25,7 +25,6 @@ public class MedicoController {
 
     private static final String PAGINA_LISTAGEM = "medico/listagem-medicos";
     private static final String PAGINA_CADASTRO = "medico/formulario-medico";
-    private static final String PAGINA_ERRO = "erro/500";
     private static final String REDIRECT_LISTAGEM = "redirect:/medicos?sucesso";
 
     private final MedicoService service;
@@ -41,9 +40,7 @@ public class MedicoController {
 
     @GetMapping
     @PreAuthorize("hasRole('ATENDENTE') OR hasRole('PACIENTE')")
-    public String carregarPaginaListagem(@PageableDefault Pageable paginacao, Model model, @AuthenticationPrincipal Usuario logado) {
-        if(logado.getPerfil() == Perfil.MEDICO)
-            return PAGINA_ERRO;
+    public String carregarPaginaListagem(@PageableDefault Pageable paginacao, Model model) {
         var medicosCadastrados = service.listar(paginacao);
         model.addAttribute("medicos", medicosCadastrados);
         return PAGINA_LISTAGEM;
@@ -51,10 +48,7 @@ public class MedicoController {
 
     @GetMapping("formulario")
     @PreAuthorize("hasRole('ATENDENTE')")
-    public String carregarPaginaCadastro(Long id, Model model, @AuthenticationPrincipal Usuario logado) {
-        if(logado.getPerfil() != Perfil.ATENDENTE)
-            return PAGINA_ERRO;
-
+    public String carregarPaginaCadastro(Long id, Model model) {
         if (id != null) {
             model.addAttribute("dados", service.carregarPorId(id));
         } else {
@@ -66,10 +60,7 @@ public class MedicoController {
 
     @PostMapping
     @PreAuthorize("hasRole('ATENDENTE')")
-    public String cadastrar(@Valid @ModelAttribute("dados") DadosCadastroMedico dados, BindingResult result, Model model, @AuthenticationPrincipal Usuario logado) {
-        if(logado.getPerfil() != Perfil.ATENDENTE)
-            return PAGINA_ERRO;
-
+    public String cadastrar(@Valid @ModelAttribute("dados") DadosCadastroMedico dados, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("dados", dados);
             return PAGINA_CADASTRO;
@@ -87,10 +78,7 @@ public class MedicoController {
 
     @DeleteMapping
     @PreAuthorize("hasRole('ATENDENTE')")
-    public String excluir(Long id, @AuthenticationPrincipal Usuario logado) {
-        if(logado.getPerfil() != Perfil.ATENDENTE)
-            return PAGINA_ERRO;
-
+    public String excluir(Long id) {
         service.excluir(id);
         return REDIRECT_LISTAGEM;
     }

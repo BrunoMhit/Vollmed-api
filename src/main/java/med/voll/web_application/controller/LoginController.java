@@ -6,13 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 //é um controller web ai usa so @controller
 @Controller
 public class LoginController {
-    //pega a rota
     @GetMapping("/login")
-    public String canregaPaginaDeListagem(){
+    public String carregaPaginaListagem(){
         return "autenticacao/login";
-    }
-    @GetMapping("/logout")
-    public String carregaPaginaLogout(){
-        return "autenticacao/logout";
     }
 }

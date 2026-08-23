@@ -20,12 +20,12 @@ public class UsuarioService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usuarioRepository.findByEmailIgnoreCase(username)
-                .orElseThrow(() -> new UsernameNotFoundException("O usuário não foi encontrado"));
+                .orElseThrow(() -> new UsernameNotFoundException("O usuário não foi encontrado!"));
     }
 
     public Long salvarUsuario(String nome, String email, String senha, Perfil perfil) {
         String senhaCriptografada = encriptador.encode(senha);
-        Usuario usuario = usuarioRepository.save(new Usuario(nome,email,senhaCriptografada,perfil));
+        Usuario usuario = usuarioRepository.save(new Usuario(nome, email, senhaCriptografada, perfil));
         return usuario.getId();
     }
 
