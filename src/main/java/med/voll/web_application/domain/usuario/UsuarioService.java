@@ -16,9 +16,12 @@ public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder encriptador;
 
+//    private final EmailService emailService;
+
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder encriptador) {
         this.usuarioRepository = usuarioRepository;
         this.encriptador = encriptador;
+//        this.emailService = emailService;
     }
 
     @Override
@@ -61,5 +64,7 @@ public class UsuarioService implements UserDetailsService {
         usuario.setExpiracaoToken(LocalDateTime.now().plusMinutes(15));
 
         usuarioRepository.save(usuario);
+
+//        emailService.enviarEmailSenha(usuario);
     }
 }
